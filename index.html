@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HomeCook</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#fffaf5;color:#3b2a1e;padding:14px 14px 110px;max-width:900px;margin:auto}
+.top{display:flex;align-items:center;gap:12px}
+.logo-icon{width:58px;height:58px;background:#e67e22;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:32px}
+.top h1{margin:0;font-size:38px;color:#d2691e;line-height:1}
+.top p{margin:2px 0 0;color:#8a6a4a;font-size:14px}
+.info-btn{margin-left:auto;width:42px;height:42px;border:1px solid #ddd;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;color:#888}
+.page{display:none}.page.active{display:block}
+.hero{background:#ffe8cc;padding:22px;border-radius:28px;margin-top:14px}
+.badge{background:#fff3d6;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:1.5px;color:#6b4423}
+.hero h2{font-size:36px;line-height:1.15;margin:16px 0 10px}
+.hero p{color:#7a5a3a;line-height:1.7;font-size:16px}
+.btn-orange{background:#e67e22;color:#fff;border:0;padding:13px 24px;border-radius:999px;font-weight:800;cursor:pointer;font-size:15px}
+.btn-light{background:#fff0dd;color:#6b4423;border:0;padding:12px 20px;border-radius:999px;font-weight:800;cursor:pointer}
+.full{width:100%;margin-top:10px}
+.big-title{font-size:36px;margin:14px 0 10px}
+.subtitle{color:#888;font-size:13px}
+.sec-title{font-size:20px;margin:22px 0 12px;color:#555}
+.overview{display:flex;gap:10px}
+.over-card{background:#fff;border:1px solid #eee;border-radius:28px;padding:16px;flex:1;min-width:0}
+.over-top{display:flex;justify-content:space-between;align-items:flex-start}
+.over-top span{font-size:15px;color:#555;line-height:1.3}
+.over-top i{font-style:normal;font-size:20px;color:#888}
+.over-card b{font-size:32px;display:block;margin-top:14px}
+.quick-list{background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.quick-item{display:flex;align-items:center;gap:12px;padding:18px;border-bottom:1px solid #f0e6d6;cursor:pointer}
+.quick-item:last-child{border-bottom:0}
+.q-icon{width:52px;height:52px;background:#ffe8cc;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.q-text b{display:block;font-size:17px}.q-text span{font-size:14px;color:#777;line-height:1.4;display:block}
+.arrow{margin-left:auto;font-size:26px;color:#999;font-style:normal}
+.card-box{background:#fff;padding:16px;border-radius:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+input,select{padding:13px;border-radius:16px;border:1px solid #eee;width:100%;margin:6px 0;font-size:14px;background:#f5efe9}
+.filter-row{display:flex;gap:8px;overflow-x:auto;padding:10px 0;white-space:nowrap}
+.chip{border:0;background:#f5efe9;padding:10px 18px;border-radius:999px;font-weight:700;cursor:pointer;flex-shrink:0}
+.chip.active{background:#1a1a1a;color:#fff}
+.recipe-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.recipe-card{background:#fff;border-radius:18px;padding:14px;box-shadow:0 2px 12px rgba(0,0,0,.06);cursor:pointer;position:relative}
+.recipe-card .emoji{font-size:32px}.recipe-card b{display:block;margin:6px 0 2px}.recipe-card span{font-size:12px;color:#888}.recipe-card p{font-size:13px;color:#666;line-height:1.4}
+.fav-btn{position:absolute;top:10px;right:12px;font-size:18px;background:none;border:0;cursor:pointer}
+.result{background:#fff3d6;padding:14px;border-radius:12px;text-align:center;font-weight:800;margin-top:12px;font-size:18px}
+.shop-ul{list-style:none;padding:0}.shop-ul li{background:#fff;padding:12px;border-radius:12px;margin:6px 0;display:flex;justify-content:space-between}
+.bottom-nav{position:fixed;bottom:14px;left:14px;right:14px;background:#fff;border-radius:999px;box-shadow:0 4px 20px rgba(0,0,0,.15);display:flex;justify-content:space-around;padding:10px 6px;max-width:900px;margin:auto;z-index:50}
+.b-btn{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:13px;color:#777;cursor:pointer;padding:6px 10px;border-radius:999px}
+.b-btn.active{background:#ffe8cc;color:#e67e22;font-weight:800}
+.b-icon{font-size:24px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);padding:20px;z-index:99}
+.modal-card{background:#fff;border-radius:22px;padding:20px;max-height:85vh;overflow:auto;max-width:600px;margin:20px auto;position:relative}
+.modal-close{position:absolute;top:12px;right:16px;cursor:pointer;font-size:20px}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="logo-icon">🍳</div>
+  <div><h1>HomeCook</h1><p>Smart Cooking Companion</p></div>
+  <div class="info-btn">ⓘ</div>
+</div>
+
+<div id="home" class="page active">
+  <div class="hero">
+    <span class="badge">WELCOME TO HOMECOOK</span>
+    <h2>Make every meal<br>easier.</h2>
+    <p>Find Filipino recipes, convert measurements, prepare ingredients, and keep your cooking organized — all in one place.</p>
+    <button class="btn-orange" onclick="showPage('recipes')">Explore Recipes →</button>
+  </div>
+  <h3 class="sec-title">Kitchen Overview</h3>
+  <div class="overview">
+    <div class="over-card"><div class="over-top"><span>Total<br>recipes</span><i>🍳</i></div><b id="statRecipes">20</b></div>
+    <div class="over-card"><div class="over-top"><span>Saved<br>favorites</span><i>♡</i></div><b id="statFav">0</b></div>
+    <div class="over-card"><div class="over-top"><span>Shopping<br>list items</span><i>🛒</i></div><b id="statShop">6</b></div>
+  </div>
+  <h3 class="sec-title">Quick Access</h3>
+  <div class="quick-list">
+    <div class="quick-item" onclick="showPage('converter')"><div class="q-icon">⚖️</div><div class="q-text"><b>Measurement Converter</b><span>Weight, volume, and temperature tools</span></div><i class="arrow">›</i></div>
+    <div class="quick-item" onclick="showPage('recipes')"><div class="q-icon">🍲</div><div class="q-text"><b>Filipino Recipes</b><span>20 authentic home dishes</span></div><i class="arrow">›</i></div>
+    <div class="quick-item" onclick="showPage('shopping')"><div class="q-icon">✅</div><div class="q-text"><b>Shopping List</b><span id="shopSub">6 items saved in pantry</span></div><i class="arrow">›</i></div>
+  </div>
+</div>
+
+<div id="recipes" class="page">
+  <h1 class="big-title">Recipes</h1>
+  <input type="text" id="searchInput" placeholder="🔍 Search Filipino recipes...">
+  <div class="filter-row">
+    <button class="chip active" onclick="setFilter('All',this)">All</button>
+    <button class="chip" onclick="setFilter('Main Dish',this)">Main Dish</button>
+    <button class="chip" onclick="setFilter('Noodles',this)">Noodles</button>
+    <button class="chip" onclick="setFilter('Snack',this)">Snack</button>
+    <button class="chip" onclick="setFilter('Dessert',this)">Dessert</button>
+    <button class="chip" onclick="setFilter('Soup',this)">Soup</button>
+  </div>
+  <div id="recipeList" class="recipe-grid"></div>
+</div>
+
+<div id="converter" class="page">
+  <h1 class="big-title">Converter</h1>
+  <div class="card-box">
+    <label>Amount</label><input type="number" id="convAmount" value="1">
+    <label>From</label><select id="convFrom"><option value="cup">Cup</option><option value="tbsp">Tablespoon</option><option value="tsp">Teaspoon</option><option value="g">Grams</option><option value="ml">Milliliter (ml)</option></select>
+    <label>To</label><select id="convTo"><option value="ml">Milliliter (ml)</option><option value="cup">Cup</option><option value="tbsp">Tablespoon</option><option value="tsp">Teaspoon</option><option value="g">Grams</option></select>
+    <button class="btn-orange full" onclick="convert()">Convert</button>
+    <div class="result" id="convResult">1 cup = 240.00 ml</div>
+  </div>
+</div>
+
+<div id="favorites" class="page">
+  <h1 class="big-title">Favorites</h1>
+  <p class="subtitle">Tap ☆ on any recipe to save it here</p>
+  <div id="favList" class="recipe-grid"></div>
+</div>
+
+<div id="shopping" class="page">
+  <h1 class="big-title">Shopping List</h1>
+  <div class="card-box"><input type="text" id="shopInput" placeholder="Add item... e.g. Chicken"><button class="btn-orange full" onclick="addShop()">Add</button></div>
+  <ul id="shopList" class="shop-ul"></ul>
+  <button class="btn-light full" onclick="clearShop()">Clear All</button>
+</div>
+
+<nav class="bottom-nav">
+  <button class="b-btn active" data-page="home"><span class="b-icon">🏠</span><span>Home</span></button>
+  <button class="b-btn" data-page="converter"><span class="b-icon">🎯</span><span>Converter</span></button>
+  <button class="b-btn" data-page="recipes"><span class="b-icon">📖</span><span>Recipes</span></button>
+  <button class="b-btn" data-page="favorites"><span class="b-icon">♡</span><span>Favorites</span></button>
+  <button class="b-btn" data-page="shopping"><span class="b-icon">🛒</span><span>Shopping...</span></button>
+</nav>
+
+<div id="modal" class="modal"><div class="modal-card"><span class="modal-close" onclick="closeModal()">✕</span><div id="modalBody"></div></div></div>
+
+<script>
+const recipes=[
+{name:"Chicken Adobo",emoji:"🍗",time:"45 min",level:"Easy",cat:"Main Dish",desc:"Classic Filipino adobo — soy sauce, vinegar, garlic, bay leaves.",ing:"Chicken, soy sauce, vinegar, garlic, bay leaves, peppercorn, cooking oil"},
+{name:"Chicken Tinola",emoji:"🐔",time:"40 min",level:"Easy",cat:"Soup",desc:"Ginger chicken soup with papaya and malunggay.",ing:"Chicken, ginger, papaya, malunggay, fish sauce, onion, water"},
+{name:"Pork Sinigang",emoji:"🍲",time:"60 min",level:"Medium",cat:"Soup",desc:"Sour soup with pork, sampalok, labanos, kangkong and tomatoes.",ing:"Pork, sampalok mix, labanos, kangkong, tomatoes, onion, sitaw"},
+{name:"Pakbet",emoji:"🥦",time:"35 min",level:"Easy",cat:"Main Dish",desc:"Ilocos mixed vegetables with bagoong and pork.",ing:"Kalabasa, okra, talong, ampalaya, sitaw, bagoong, pork, onion, garlic"},
+{name:"Pancit Bihon",emoji:"🍜",time:"30 min",level:"Easy",cat:"Noodles",desc:"Stir-fried rice noodles with chicken, vegetables and calamansi.",ing:"Bihon noodles, chicken, carrots, cabbage, celery, soy sauce, calamansi"},
+{name:"Tortang Talong",emoji:"🍆",time:"25 min",level:"Easy",cat:"Main Dish",desc:"Grilled eggplant omelet — crispy outside, soft inside.",ing:"Talong, eggs, onion, garlic, salt, cooking oil"},
+{name:"Lumpiang Shanghai",emoji:"🥟",time:"45 min",level:"Medium",cat:"Snack",desc:"Crispy spring rolls with pork and vegetables.",ing:"Ground pork, carrots, lumpia wrapper, garlic, soy sauce, egg"},
+{name:"Lumpiang Gulay",emoji:"🥬",time:"35 min",level:"Easy",cat:"Snack",desc:"Fresh vegetable lumpia with togue and sauce.",ing:"Togue, carrots, cabbage, kamote, lumpia wrapper, garlic sauce"},
+{name:"Champorado",emoji:"🍫",time:"30 min",level:"Easy",cat:"Dessert",desc:"Chocolate rice porridge — best with tuyo and milk.",ing:"Malagkit rice, tablea / cocoa, sugar, evaporated milk, tuyo"},
+{name:"Leche Flan",emoji:"🍮",time:"60 min",level:"Medium",cat:"Dessert",desc:"Creamy caramel custard — smooth and sweet.",ing:"Egg yolks, condensed milk, evaporated milk, sugar, vanilla, calamansi"},
+{name:"Halo-Halo",emoji:"🍧",time:"15 min",level:"Easy",cat:"Dessert",desc:"Filipino shaved ice dessert with milk, beans and ube.",ing:"Shaved ice, evaporated milk, ube halaya, beans, sago, leche flan"},
+{name:"Ube Halaya",emoji:"💜",time:"50 min",level:"Medium",cat:"Dessert",desc:"Purple yam jam — creamy, sweet and pang-handaan.",ing:"Ube, condensed milk, evaporated milk, butter, sugar"},
+{name:"Maruya",emoji:"🍌",time:"20 min",level:"Easy",cat:"Snack",desc:"Banana fritters — crispy, sweet and perfect for merienda.",ing:"Saging na saba, flour, egg, sugar, milk, cooking oil"},
+{name:"Bibingka",emoji:"🍰",time:"45 min",level:"Medium",cat:"Dessert",desc:"Rice cake with salted egg, cheese and coconut.",ing:"Rice flour, coconut milk, salted egg, cheese, sugar, banana leaves"},
+{name:"Kare-Kare",emoji:"🥜",time:"90 min",level:"Hard",cat:"Main Dish",desc:"Oxtail stew in peanut sauce with vegetables and bagoong.",ing:"Oxtail / beef, peanut butter, eggplant, string beans, pechay, bagoong"},
+{name:"Spaghetti",emoji:"🍝",time:"35 min",level:"Easy",cat:"Noodles",desc:"Filipino sweet spaghetti with hotdog and cheese.",ing:"Spaghetti noodles, ground pork, tomato sauce, hotdog, cheese, sugar"},
+{name:"Sisig",emoji:"🔥",time:"60 min",level:"Medium",cat:"Main Dish",desc:"Sizzling pork with calamansi, chili and egg.",ing:"Pork face / belly, calamansi, chili, onion, egg, mayo, soy sauce"},
+{name:"Bicol Express",emoji:"🌶️",time:"50 min",level:"Medium",cat:"Main Dish",desc:"Spicy pork in coconut milk with chili and bagoong.",ing:"Pork, coconut milk, chili, bagoong, garlic, onion"},
+{name:"Fish Paksiw",emoji:"🐟",time:"30 min",level:"Easy",cat:"Main Dish",desc:"Fish simmered in vinegar, ginger and ampalaya.",ing:"Bangus, vinegar, ginger, ampalaya, onion, garlic, water"},
+{name:"Salad",emoji:"🥗",time:"15 min",level:"Easy",cat:"Snack",desc:"Fresh Filipino salad — crunchy, healthy and light.",ing:"Lettuce, cucumber, tomatoes, carrots, egg, mayo / dressing, salt"}
+];
+let favorites=JSON.parse(localStorage.getItem('hc_fav')||'[]');
+let shopping=JSON.parse(localStorage.getItem('hc_shop')||'["Chicken","Garlic","Soy Sauce","Vinegar","Onion","Cooking Oil"]');
+let currentFilter='All';
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.b-btn').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
+  if(id==='recipes') renderRecipes();
+  if(id==='favorites') renderFavs();
+  if(id==='shopping') renderShop();
+  updateCounts();
+}
+document.querySelectorAll('.b-btn').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+function cardHTML(r,i){
+  const isFav=favorites.includes(i)?'⭐':'☆';
+  return `<div class="recipe-card"><button class="fav-btn" onclick="event.stopPropagation();toggleFav(${i})">${isFav}</button><div onclick="openRecipe(${i})"><div class="emoji">${r.emoji}</div><b>${r.name}</b><span>${r.time} • ${r.level} • ${r.cat}</span><p>${r.desc}</p></div></div>`;
+}
+function renderRecipes(){
+  const q=(document.getElementById('searchInput').value||'').toLowerCase();
+  const filtered=recipes.filter(r=>(currentFilter==='All'||r.cat===currentFilter)&&r.name.toLowerCase().includes(q));
+  document.getElementById('recipeList').innerHTML=filtered.map(r=>cardHTML(r,recipes.indexOf(r))).join('')||'<p>No recipe found. Try All.</p>';
+}
+function renderFavs(){
+  const el=document.getElementById('favList');
+  if(!favorites.length){el.innerHTML='<p>No favorites yet. Tap ☆ on any recipe.</p>';return;}
+  el.innerHTML=favorites.map(i=>cardHTML(recipes[i],i)).join('');
+}
+function openRecipe(i){
+  const r=recipes[i];const isFav=favorites.includes(i);
+  document.getElementById('modalBody').innerHTML=`<div style="font-size:50px">${r.emoji}</div><h2>${r.name}</h2><p>${r.time} • ${r.level} • ${r.cat}</p><p>${r.desc}</p><h3>Ingredients</h3><p>${r.ing}</p><button class="btn-orange" onclick="toggleFav(${i});closeModal()">${isFav?'Remove from Favorites':'Add to Favorites ⭐'}</button> <button class="btn-light" onclick="addShopItem('${r.name} ingredients');closeModal()">Add to Shopping List</button>`;
+  document.getElementById('modal').style.display='block';
+}
+function closeModal(){document.getElementById('modal').style.display='none';}
+function toggleFav(i){
+  favorites=favorites.includes(i)?favorites.filter(x=>x!==i):[...favorites,i];
+  localStorage.setItem('hc_fav',JSON.stringify(favorites));renderRecipes();renderFavs();updateCounts();
+}
+function addShop(){const inp=document.getElementById('shopInput');if(!inp.value.trim())return;addShopItem(inp.value.trim());inp.value='';}
+function addShopItem(v){shopping.push(v);localStorage.setItem('hc_shop',JSON.stringify(shopping));renderShop();updateCounts();}
+function renderShop(){document.getElementById('shopList').innerHTML=shopping.map((item,idx)=>`<li>${item} <span style="cursor:pointer" onclick="removeShop(${idx})">✕</span></li>`).join('')||'<li>No items yet</li>';}
+function removeShop(idx){shopping.splice(idx,1);localStorage.setItem('hc_shop',JSON.stringify(shopping));renderShop();updateCounts();}
+function clearShop(){shopping=[];localStorage.setItem('hc_shop','[]');renderShop();updateCounts();}
+function setFilter(f,btn){document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));btn.classList.add('active');currentFilter=f;renderRecipes();}
+function convert(){
+  const val=parseFloat(document.getElementById('convAmount').value||0);
+  const from=document.getElementById('convFrom').value;const to=document.getElementById('convTo').value;
+  const toMl={cup:240,tbsp:15,tsp:5,g:1,ml:1};
+  const result=(val*toMl[from]/toMl[to]).toFixed(2);
+  document.getElementById('convResult').innerText=`${val} ${from} = ${result} ${to}`;
+}
+document.getElementById('searchInput').addEventListener('input',renderRecipes);
+function updateCounts(){
+  document.getElementById('statRecipes').innerText=recipes.length;
+  document.getElementById('statFav').innerText=favorites.length;
+  document.getElementById('statShop').innerText=shopping.length;
+  document.getElementById('shopSub').innerText=`${shopping.length} items saved in pantry`;
+}
+renderRecipes();renderFavs();renderShop();updateCounts();
+</script>
+</body>
+</html>
