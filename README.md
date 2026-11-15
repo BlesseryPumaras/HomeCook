@@ -1,2 +1,2 @@
 # HomeCook
-Smart Cooking Companion - Filipino Recipes
+Smart Cooking Converter Companion
