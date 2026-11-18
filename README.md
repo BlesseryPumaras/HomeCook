@@ -24,5 +24,5 @@ https://github.com/BlesseryPumaras/HomeCook
 
 ## Author
 Blessery Joy H.Pumaras
-Section:BSINTE 2A# HomeCook Converter
-Smart Cooking Converter Companion
+Section:BSINTE 2A
+
