@@ -28,3 +28,6 @@ Blessery Joy H.Pumaras
 
 Section:BSINTE 2A
 
+## Screenshots
+![HomeCook Home Page](Screenshot_20261119-194308.jpg)
+
